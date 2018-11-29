@@ -132,6 +132,11 @@
 </li>
 <li><p>Adapter最大的改进就是对ViewHolder进行了封装定义，我们只需要自定义一个ViewHolder继承RecyclerView.ViewHolder就行。另外Adapter继承了RecyclerView.Adapter，在onCreateViewHolder中加载条目布局，在onBindViewHolder中将视图与数据进行绑定</p>
 </li>
+<li><p>3.设置分割线 </p>
+<ul>
+<li>使用mRecyclerView.addItemDecoration()加入分割线。谷歌目前没有提供默认的分割线，需要我们继承RecyclerView.ItemDecoration来自定义分割线</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

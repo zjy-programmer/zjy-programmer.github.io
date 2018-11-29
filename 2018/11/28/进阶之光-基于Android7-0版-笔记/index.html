@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="第1章 Android新特性 1.1 Android5.0新特性  1.1.1 Android5.0主要新特性概述  1.全新的Material Design设计风格(MD风格) 2.支持多种设备 3.全新的通知中心设计 4.支持64位ART虚拟机 放弃了之前用的Dalvik虚拟机，改用了ART虚拟机，实现了真正的跨平台编译，在ARM、X86、MIPS等无处不在   5.Overview 多任务窗">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-28T09:48:38.000Z">
+<meta property="og:updated_time" content="2018-11-29T06:35:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="进阶之光(基于Android7.0版)笔记">
 <meta name="twitter:description" content="第1章 Android新特性 1.1 Android5.0新特性  1.1.1 Android5.0主要新特性概述  1.全新的Material Design设计风格(MD风格) 2.支持多种设备 3.全新的通知中心设计 4.支持64位ART虚拟机 放弃了之前用的Dalvik虚拟机，改用了ART虚拟机，实现了真正的跨平台编译，在ARM、X86、MIPS等无处不在   5.Overview 多任务窗">
@@ -133,6 +133,11 @@
 <li><p>此外RecyclerView比ListView的设置要复杂一些，主要是它需要自己去自定义分割线，设置动画和布局管理器等</p>
 </li>
 <li><p>Adapter最大的改进就是对ViewHolder进行了封装定义，我们只需要自定义一个ViewHolder继承RecyclerView.ViewHolder就行。另外Adapter继承了RecyclerView.Adapter，在onCreateViewHolder中加载条目布局，在onBindViewHolder中将视图与数据进行绑定</p>
+</li>
+<li><p>3.设置分割线 </p>
+<ul>
+<li>使用mRecyclerView.addItemDecoration()加入分割线。谷歌目前没有提供默认的分割线，需要我们继承RecyclerView.ItemDecoration来自定义分割线</li>
+</ul>
 </li>
 </ul>
 </li>
