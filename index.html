@@ -114,7 +114,7 @@
 <li><p>1.配置build.gradle</p>
 <ul>
 <li><p>使用RecyclerView需要导入support-v7包，Android Studio中(所有例子都基于Android Studio)在build.gradle中加入以下代码自动导入support-v7包，配置完重新Build一下工程。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependcies&#123;</span><br><span class="line">    ...</span><br><span class="line">    compile <span class="string">'com.android.support:appcompat-v7:22.2.0'</span></span><br><span class="line">    compile <span class="string">'com.android.support:recyclerview-v7:22.2.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependcies&#123;</span><br><span class="line">    ...</span><br><span class="line">        compile <span class="string">'com.android.support:appcompat-v7:22.2.0'</span></span><br><span class="line">        compile <span class="string">'com.android.support:recyclerview-v7:22.2.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -137,6 +137,165 @@
 <li>使用mRecyclerView.addItemDecoration()加入分割线。谷歌目前没有提供默认的分割线，需要我们继承RecyclerView.ItemDecoration来自定义分割线</li>
 </ul>
 </li>
+<li><p>4.自定义点击事件</p>
+<ul>
+<li>Adapter中定义接口并提供回调</li>
+</ul>
+</li>
+<li><p>5.实现GridView</p>
+</li>
+<li><p>6.实现瀑布流</p>
+<ul>
+<li><p>在Adaper的onBindViewHolder中设置每个item的高度</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LayoutParams lp = holder.tv.getLayoutParams();</span><br><span class="line">lp.height = item的高度;</span><br><span class="line">holder.tv.setLayoutParams(lp);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>1.1.3卡片CardView</p>
+<ul>
+<li><p>Android5.0版本新增CardView，CardView继承自FrameLayout类，并且可以设置圆角和阴影，使得控件具有立体性，也可以包含其他的布局容器和控件。</p>
+</li>
+<li><p>1.配置build.gradle</p>
+</li>
+<li><p>如果SDK低于5.0，要引入v7包，配置完再重新Build一下工程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    ...</span><br><span class="line">        compile <span class="string">'com.android.support:appcompat-v7:22.2.1'</span></span><br><span class="line">        compile <span class="string">'com.android.support:cardview-v7:22.1.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>2.使用CardView</p>
+<ul>
+<li><p>重要属性：</p>
+<ul>
+<li>card_view：cardCornerRadius，设置圆角的半径</li>
+<li>card_view：cardElevation，设置阴影的半径</li>
+</ul>
+</li>
+<li><p>其他属性</p>
+<ul>
+<li>CardView_cardBackgroundColor：设置背景色。</li>
+<li>CardView_cardElevation：设置Z轴阴影。</li>
+<li>CardView_cardMaxElevation：设置Z轴最大高度值。</li>
+<li>CardView_cardUseCompatPadding：是否使用CompadPadding。</li>
+<li>CardView_cardPreventCornerOverlap：是否使用PreventCornerOverlap。</li>
+<li>CardView_contentPadding：内容的padding。</li>
+<li>CardView_contentPaddingLeft：内容的左padding。</li>
+<li>CardView_contentPaddingTop：内容的上padding。</li>
+<li>CardView_contentPaddingRight：内容的右padding。</li>
+<li>CardView_contentPaddingBottom：内容的底padding。”</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>1.1.4 3种Notification</p>
+<ul>
+<li><p>普通、折叠、悬挂式</p>
+</li>
+<li><p>1.普通notification</p>
+<ul>
+<li>首先创建Builder对象，用PendingIntent控制跳转，NotificationManager的notify发送通知</li>
+</ul>
+</li>
+<li><p>2.折叠式Notification</p>
+<ul>
+<li>有两种状态：一种是普通状态（如果不是自定义的，和上面普通Notification的视图样式一样），另一种是展开状态下的视图。和普通Notification不同的是我们需要自定义视图，尔这个视图显示的进程和我们创建视图的进程不在一个进程，所以需要使用RemoteViews。首先使用RemoteViews来创建自定义视图，然后把自定义的视图赋值给Notification的视图，当然也可以把自定义视图赋值给Notification普通状态时的视图，如果不是自定义普通状态视图的话折叠式Notification普通状态和普通Notification没什么区别</li>
+</ul>
+</li>
+<li><p>3.悬挂式Notification</p>
+<ul>
+<li>android5.0新增加的方式；不需要下拉通知栏就直接显示出来悬挂在屏幕上方，并且焦点不变，仍在用户操作的界面，因此不会打断用户的操作，过几秒就会消失，和前两种Notification不同的是，它需要调用setFullScreenIntent来将Notification变为悬挂式Notification</li>
+</ul>
+</li>
+<li><p>4.Notification的显示等级</p>
+<ul>
+<li><p>Android5.0加入了一种新的模式Notification的显示等级共有3种：</p>
+<ul>
+<li>VISIBILITY_PUBLIC：任何时代都会显示通知</li>
+<li>VISIBILITY_PRIVATE：只有在没有锁屏时会显示通知</li>
+<li>VISIBILITY_SECRET：在pin、password等安全锁和没有锁屏的情况下才能够显示通知</li>
+</ul>
+</li>
+<li><p>只要调用setVisibility方法就行</p>
+<p><code>builder.setVisibility(Notification.VISIBILITY_PUBLIC);</code></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>1.1.5 ToolBar与Palette</p>
+<ul>
+<li><p>Actionbar的升级版</p>
+</li>
+<li><p>1.引入Toolbar</p>
+</li>
+<li><p>引入v7支持包</p>
+</li>
+<li><p>为了显示Toolbar控件，先在style里把Actionbar去掉</p>
+</li>
+<li><p>2.自定义Toolbar</p>
+</li>
+<li><p>可以设置Toolbar的标题和图标以及Menu Item等属性，Menu Item的设置和Actionbar类似，我们在menu/main.xml中去声明；然后覆写onCreateOptionMenu并在toolbar.setOnMenuItemClickListener实现点击MenuItem的回调</p>
+</li>
+<li><p>3.添加DrawerLayout实现侧滑</p>
+</li>
+<li><p>Palette的应用</p>
+<ul>
+<li><p>Android5.x用Palette来取色，从而让主题能够动态适应当前界面的色调，Android内置了几种提取色调的种类：</p>
+</li>
+<li><p>Vibrant（充满活力的）</p>
+</li>
+<li><p>Vibrant dark（充满活力的黑）</p>
+</li>
+<li><p>Vibrant light（充满活力的亮）</p>
+</li>
+<li><p>Muted（柔和的）</p>
+</li>
+<li><p>Muted dark（柔和的黑）</p>
+</li>
+<li><p>Muted light（柔和的亮）</p>
+</li>
+<li><p>要使用Palette，我们需要引用’com.android.support:palette-v7:23.0.1’。实现提取颜色，只要将bitmap传递给Palette，调用generate即可。在onGenerated回调中得到图片的色调，这里我们获取的是图片充满活力的色调，最后我们把Toolbar的背景颜色设置为改图片的色调。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.bitmap);</span><br><span class="line">Palette.from(bitmap).generate(<span class="keyword">new</span> Palette.PaletteAsyncListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onGenerated</span><span class="params">(Palette palette)</span> </span>&#123;</span><br><span class="line">        Palette.Swatch swatch = palette.getVibrantSwatch();</span><br><span class="line">        getSupportActionBar().setBackgroundDrawable(<span class="keyword">new</span> ColorDrawable()swatch.getRgb()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>1.2 Android 6.0新特性</p>
+<ul>
+<li>Marshmallow（棉花糖）系统</li>
+<li>1.2.1 Android 6.0主要新特性概述<ul>
+<li>1.应用权限管理</li>
+<li>2.Android Pay</li>
+<li>3.指纹支持</li>
+<li>4.Doze电量管理</li>
+<li>5.App Links<ul>
+<li>App和Web域名关联，比如手机邮箱里有一封邮件，内文里有一个Twitter链接，点击改链接可以直接跳转到Twitter应用，而不再是网页</li>
+</ul>
+</li>
+<li>6.Now on Tap</li>
+</ul>
+</li>
+<li>1.2.2运行时权限机制<ul>
+<li>1.Android6.0之前版本的应对之策<ul>
+<li>Android6.0系统默认targetSDKVersion小于23的应用授权了所申请的所有权限</li>
+</ul>
+</li>
+<li>2.Normal Permissions与Dangerous Permission<ul>
+<li>Google将权限分为两类：一类是Normal Permissions，这类权限一般不涉及用户隐私，是无需用户进行授权的，比如手机振动，访问网络等，这些权限只需要在AndroidManifest.xml中简单声明就好，安装是就授权，无须每次使用时都检查权限，而且用户不能取消以上授权；另一类就是Dangerous Permission，一般会涉及用户隐私，需要用户进行授权，比如读取sdcard、访问通讯录等。Dangerous Permission分组的，同一组的任何一个权限被授权了，其他权限也自动被授权，此外对于申请时弹出的提示框上面的文本说明也是对整个权限组的说明，而不是单个权限的说明。</li>
+</ul>
+</li>
+<li>3.实现支持运行时权限<ul>
+<li>targetSdkVersion 大于等于23</li>
+<li>打电话为例，打电话，判断是否有permission.CALL_PHONE的权限，如果有则直接调用打电话方法，如果没有则弹出提示框进行权限申请，onRequestPermissionResult就是申请权限的回调，如果用户选择“允许”，则调用打电话逻辑，如果选择“拒绝”，就弹出Toast显示权限被拒绝；点击允许后下次就不会弹出提示框，点击拒绝下次还会弹出提示框，只不过这一次会多一个选项，叫做“不再询问”，如果我们勾选了该选项，则下一次就不会弹框，而直接调用onRequestPermissionResult，回调结果为最后一次用户的选择。</li>
+</ul>
+</li>
+<li>4.处理“不再询问”选项<br>- </li>
 </ul>
 </li>
 </ul>
