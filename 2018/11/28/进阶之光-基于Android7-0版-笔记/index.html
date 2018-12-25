@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="第1章 Android新特性 1.1 Android5.0新特性  1.1.1 Android5.0主要新特性概述  1.全新的Material Design设计风格(MD风格) 2.支持多种设备 3.全新的通知中心设计 4.支持64位ART虚拟机 放弃了之前用的Dalvik虚拟机，改用了ART虚拟机，实现了真正的跨平台编译，在ARM、X86、MIPS等无处不在   5.Overview 多任务窗">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-30T08:28:40.000Z">
+<meta property="og:updated_time" content="2018-12-25T11:57:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="进阶之光(基于Android7.0版)笔记">
 <meta name="twitter:description" content="第1章 Android新特性 1.1 Android5.0新特性  1.1.1 Android5.0主要新特性概述  1.全新的Material Design设计风格(MD风格) 2.支持多种设备 3.全新的通知中心设计 4.支持64位ART虚拟机 放弃了之前用的Dalvik虚拟机，改用了ART虚拟机，实现了真正的跨平台编译，在ARM、X86、MIPS等无处不在   5.Overview 多任务窗">
@@ -297,7 +297,225 @@
 <li>打电话为例，打电话，判断是否有permission.CALL_PHONE的权限，如果有则直接调用打电话方法，如果没有则弹出提示框进行权限申请，onRequestPermissionResult就是申请权限的回调，如果用户选择“允许”，则调用打电话逻辑，如果选择“拒绝”，就弹出Toast显示权限被拒绝；点击允许后下次就不会弹出提示框，点击拒绝下次还会弹出提示框，只不过这一次会多一个选项，叫做“不再询问”，如果我们勾选了该选项，则下一次就不会弹框，而直接调用onRequestPermissionResult，回调结果为最后一次用户的选择。</li>
 </ul>
 </li>
-<li>4.处理“不再询问”选项<br>- </li>
+<li>4.处理“不再询问”选项</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>1.3 Android7.0新特性</p>
+<ul>
+<li><p>1.3.1 新特性概述</p>
+<ul>
+<li>1.多窗口模式<ul>
+<li>只要在一个应用程序中长按Overview按钮，就能进入多窗口模式</li>
+</ul>
+</li>
+<li>2.Data Saver<ul>
+<li>流量保护机制，启用后系统将拦截后台的数据使用，可以通过白名单设置，用户可以让应用避免受到Data Saver模式的影响</li>
+</ul>
+</li>
+<li>3.改进的Java8语言支持<ul>
+<li>Jack编译器能减少系统的冗余代码、降低占用和运行时间。开发者可以直接用Lambda表达式</li>
+</ul>
+</li>
+<li>4.自定义壁纸</li>
+<li>5.快速回复<ul>
+<li>通知栏直接回复</li>
+</ul>
+</li>
+<li>6.Daydream VR支持<ul>
+<li>内置谷歌的全新VR平台Daydream。Daydream是一个虚拟现实平台，由Daydream头盔、手柄和智能手机构成，支持Daydream的智能手机要满足一定的硬件要求</li>
+</ul>
+</li>
+<li>7.后台省电<ul>
+<li>屏幕关闭后所有的后台进程都将会被系统限制活动</li>
+</ul>
+</li>
+<li>8.快速设置<ul>
+<li>下拉通知栏顶部可以展开快捷开关界面</li>
+</ul>
+</li>
+<li>9.Unicode9支持和全新的emoji表情符号<ul>
+<li>支持Unicode9，并新增大约70种emoji表情符号，大多数是人形的，提供不同的肤色</li>
+</ul>
+</li>
+<li>10.Google Assistant<ul>
+<li>Google Assistant号称融合了谷歌搜索的深度学习技术以及 Google Now 的个人信息学习技术，它能够分辨用户的自然语言，并具备联系上下文的理解能力。这样你在向它发出指令时，就像和朋友聊天一样，无须迎合系统而说一些生硬且古板的语句。它能够按照你的谈话内容和习惯来调整自己的推荐建议，最终能够形成一种适合于用户本人的模式，为用户的日常生活提供帮助。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>1.3.2 多窗口模式</p>
+<ul>
+<li><p>1.进入多窗口模式</p>
+<p>两种模式：</p>
+<ol>
+<li>点击手机导航栏最右边的Overview按钮进入Overview列表，长按列表中的活动窗口并拖入到屏幕最上方的分屏提示区域</li>
+<li>打开一个程序，长按Overview按钮也可以进入多窗口模式</li>
+</ol>
+</li>
+<li><p>2.多窗口模式的生命周期</p>
+<ul>
+<li>当我们长按Overview按钮进入多窗口模式时，onPause-&gt;onStop-&gt;onDestroy-&gt;onCreat-&gt;onStart-&gt;onResume-&gt;onPause</li>
+<li>当点击自己的项目的窗口时，项目才会获取焦点进入onResume状态</li>
+<li>长按Overview按钮退出多窗口模式，onStop-&gt;onDestroy-&gt;onCreate-&gt;onStart-&gt;onResume-&gt;onPause-&gt;onResume</li>
+</ul>
+</li>
+<li><p>3.禁用多窗口模式</p>
+<ul>
+<li><p>多窗口模式未必适用于所有应用，如果想禁用多窗口模式，只需要在AndroidManifest.xml中加入如下属性即可：</p>
+<p><code>android:resizeableActivity=&quot;false&quot;</code></p>
+<p>如果不加此属性，则默认是支持多窗口模式的，但是在targetSdkVersion设置的值小于24时，android:resizeableActivity。面对这一情况，解决方案就是设置应用不支持横竖屏切换，比如将Activity设置为只支持竖屏，android:screenOrientation:”portrait”</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="第2章-Material-Design"><a href="#第2章-Material-Design" class="headerlink" title="第2章 Material Design"></a>第2章 Material Design</h1><ul>
+<li><p>2.1Material Design概述</p>
+<ul>
+<li><p>2.1.1核心思想</p>
+<ul>
+<li>Material Design的核心思想，就是将物理世界中的体验带入屏幕，并且去掉物理世界中的杂质，再配合虚拟世界的灵活特性，达到最贴近真实的体验。到目前为止可以说，Material Design是最重视跨平台体验的一套设计语言。它的规范严格细致，这样就保证了其在各个平台的使用体验高度一致</li>
+</ul>
+</li>
+<li><p>2.1.2 材质与空间</p>
+<ul>
+<li>魔法纸片是Material Design中最重要的信息载体，它拥有现实中的厚度、惯性和反馈，并且能够自由伸展变形。魔法纸片引入z轴的概念，z轴垂直于屏幕，用来表现元素的层叠关系。z值越高，元素离界面底层的距离越远，投影就越重</li>
+</ul>
+</li>
+<li><p>2.1.3 动画</p>
+<ul>
+<li><p>1.真实的动作</p>
+<p>在Material Design设计规范中，动作不仅仅要展示物体的运动轨迹，还需要展示其在空间中的关系、功能以及在整个系统中的趋势。</p>
+</li>
+<li><p>2.响应式交互</p>
+<p>响应式交互是一种有目的、非随机的、有些异想天开但不会让人分心的交互。响应式交互分为3种交互形式，分别是表层响应、元素响应和径向响应。</p>
+<ul>
+<li>表层响应 当用户点击屏幕时，系统会立即在交互的触点上绘制出一个可视化的图形让用户感知到：如在点击屏幕时会出现类似于墨水扩散那样的视觉效果形状。</li>
+<li>元素响应 元素本身也能做出交互响应，物体可以在触控或点击的时候浮起来，以表示该元素正处于激活可操作状态。比如我们长按一个应用图标时，这个应用会浮起来，我们可以拖动该应用图标完成位置更换或者卸载等操作。</li>
+<li>径向响应 所有的用户交互行为中都会有一个中心点，作为用户关注的中心点，当用户进行操作时应该绘制一个明显的视觉效果来让用户清晰的感知到自己的操作。</li>
+</ul>
+</li>
+<li><p>3.转场动画</p>
+<ul>
+<li>转场动画不仅要提升用户体验的整体美感，还要为业务服务</li>
+</ul>
+</li>
+<li><p>4.细节动画</p>
+</li>
+</ul>
+</li>
+<li><p>2.1.4 样式</p>
+<ul>
+<li>1.色彩<ul>
+<li>强调大胆的阴影和高光</li>
+</ul>
+</li>
+<li>2.字体<ul>
+<li>自从Android4.0发布以来，Roboto一直都是Android系统的默认字体集。在Material Design中，为了适配更多的平台，将Roboto做了进一步的全面优化。宽度和圆度都有了轻微提高，从而提升了清晰度，并且看起来更令人赏心悦目</li>
+</ul>
+</li>
+<li>3.字体排版<ul>
+<li>一个优秀的布局不会使用过多的字体尺寸和样式。字体排版的缩放是包含了有限个字体尺寸的集合，它们能够良好的适应布局结构。最基本的样式就是基于12、14、16、20和34号的字体排版缩放。这些字体尺寸是通过sp制定的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2.1.5 图标</p>
+<ul>
+<li>1.桌面图标<ul>
+<li>一般使用48dph 48dph的尺寸，必要时可以放大到192dph 192dph</li>
+</ul>
+</li>
+<li>2.小图标<ul>
+<li>优先使用Material Design默认图标。设计小图标时，使用最简练的图形来表达，图形不要带空间感。小图标尺寸是24dph 24dph，图形限制在中央20dph 20dph区域内。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2.1.6 图像</p>
+<ul>
+<li>在Material Design中，图像都不应该是人为策划的，而是组建生成的，不要给用户一种过度制作的感觉。这种风格比较强调场景的实质性、质感和深度，让人意想不到的色彩运用，以及对环境背景的关注。这些原则都旨在创建目的性强、美观、具有深度的用户界面</li>
+<li>布局设计使用相同的视觉元素、结构网格和通用的行距规则，这样会使得App在不同平台与屏幕尺寸上都拥有一致的外观和体验。这样就创造了一个识别度高的跨平台产品的用户环境，这个环境会给用户提供高度的熟悉感和舒适性。</li>
+</ul>
+</li>
+<li><p>2.1.7 组件</p>
+<ul>
+<li>1.底部动作条（Bottom Sheets）<ul>
+<li>底部动作条是一个从屏幕底部边缘向上滑出的面板，旨在向用户呈现一组功能。底部动作条呈现了简单、清晰的一组操作</li>
+</ul>
+</li>
+<li>2.卡片（Cards）<ul>
+<li>卡片是包含一组特定数据集合的纸片，数据集合中包含了各种相关信息，例如，主题的照片、文本和链接。卡片通常用于展示一些基础和概述的信息，并且作为通往更详细信息的入口。卡片有固定的宽度和可变的高度，其最大高度限制于可适应平台上单一视图的内容；但如果需要它，可以临时扩展</li>
+</ul>
+</li>
+<li>3.提示框（Dialogs）<ul>
+<li>用于向用户提示一些信息，或者是一些决定的选择。提示框可以采用一种取消/确定的简单应答模式，也可以采用自定义布局的复杂模式，比如增加一些文本设置或者是文本输入。</li>
+</ul>
+</li>
+<li>4.菜单（Menus）<ul>
+<li>菜单能够影响到应用、视图或者视图中选中的按钮。它由按钮、动作、点或者包含至少两个菜单项的其他控件触发。每一项菜单项是一个选项或者动作，菜单不应该用作应用中主要的导航方法</li>
+</ul>
+</li>
+<li>5.选择器<ul>
+<li>选择器提供了一个简单的方法来从一个预定义的集合中选取单个值。最常用的例子就是用户要输入日期的场景。</li>
+</ul>
+</li>
+<li>6.滑块控件（Sliders）<ul>
+<li>比如调整音乐进度用到</li>
+</ul>
+</li>
+<li>7.进度和动态<ul>
+<li>每次加载操作只能由一个进度指示器呈现</li>
+</ul>
+</li>
+<li>8.Snackbar与Toast<ul>
+<li>Snackbar是一种轻量级的弹出框，通常显示在屏幕的底部并在屏幕所有层的最上方，包括浮动操作按钮。它会在超时或者用户在屏幕其他地方触摸之后自动消失。Snackbar可以在屏幕上滑动关闭，Snackbar不会阻碍用户在屏幕上的输入，并且也不支持输入，屏幕上同时最多只能显示一个Snackbar。Toast同Snackbar非常相似，但是Toast并不包含操作，也不能从屏幕上滑动关闭。</li>
+</ul>
+</li>
+<li>9.Tab<ul>
+<li>在一个App中，Tab使得在不同的视图和功能间切换更加简单。Tab用来显示有关联的分组内容，Tab标签则用来简要地描述Tab的内容。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2.2 Design Support Library常用控件详解</p>
+<p>​    这个兼容库很容易和Android Support Library22.1混淆。它们都是兼容库，二者的区别是这个库多了一些Material Design设计风格的控件</p>
+<ul>
+<li><p>2.2.1Snackbar的使用</p>
+<ul>
+<li>为一个操作提供轻量级的、快速的反馈是使用Snackbar的最好时机。Snackbar显示在屏幕的底部，包含了文字信息与一个可选的操作按钮。它在指定时间结束之后自动消失。另外，配合CoordinatorLayout使用，还可以在超时之前将它滑动删除。</li>
+<li>make方法的第一个参数是一个View类型的参数，这个View类型的参数是Snackbar的父控件，所以选择合适的父控件以确保Snackbar能显示在正确的位置上。另外，这个Snackbar界面包含了两个元素：一个用来显示文字，另一个用来设置点击事件。    </li>
+</ul>
+</li>
+<li>2.2.2用TextInputLayout实现登录界面<ul>
+<li>1.实现布局</li>
+<li>2.使用TextInputLayout<ul>
+<li>TextInputLayout控件是一个容器，它跟ScrollView一样只接受一个子元素，并且这个子元素是EditText</li>
+</ul>
+</li>
+<li>3.显示错误信息<ul>
+<li>通过getEditText().getText().toString()来获取输入的信息，通过setErrorEnabled(boolean enabled)方法设置显示和隐藏错误提示，通过setError()来设置错误提示文字</li>
+</ul>
+</li>
+<li>4.改变样式<ul>
+<li>在style.xml文件中对colorAccent属性进行修改</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>2.2.3FloatingActionButton的使用<ul>
+<li>跟button差不多，填充色默认也是style.xml文件colorAccent设定的颜色，也可以通过app:backgroundTint来设定，app:elevation用来设置正常状态的阴影大小，app:pressedTranslationZ用来设置点击时阴影的大小</li>
+</ul>
+</li>
+<li>2.2.4用TabLayout实现类似网易选项卡的动态丝滑效果<ul>
+<li></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

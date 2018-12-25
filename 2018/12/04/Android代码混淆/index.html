@@ -15,7 +15,7 @@
 <meta property="og:description" content="Android混淆基本概念混淆，字面上来说就是把项目中的包名、类名、方法名和变量名等进行更改，用以迷惑别人。但混淆其实包含了代码压缩、优化、校验等过程，把混淆称作ProGuard更适合。 ProGuard官网地址 ProGuard就是Java对Class文件进行“混淆”的工具，   shrink（压缩）：ProGuard会递归的确定哪些类和类成员被使用，而其他的则被丢弃；移除无效的类、类成员、方法">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9b6cd9e1ly1fxufs2tugij20qc06ijrk.jpg">
-<meta property="og:updated_time" content="2018-12-05T02:51:23.000Z">
+<meta property="og:updated_time" content="2018-12-05T06:51:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
 <meta name="twitter:description" content="Android混淆基本概念混淆，字面上来说就是把项目中的包名、类名、方法名和变量名等进行更改，用以迷惑别人。但混淆其实包含了代码压缩、优化、校验等过程，把混淆称作ProGuard更适合。 ProGuard官网地址 ProGuard就是Java对Class文件进行“混淆”的工具，   shrink（压缩）：ProGuard会递归的确定哪些类和类成员被使用，而其他的则被丢弃；移除无效的类、类成员、方法">
@@ -136,6 +136,33 @@
 <li><p><code>proguard-android.txt</code> 已经存在一些默认混淆规则，没必要在 <code>proguard-rules.pro</code> 重复添加</p>
 </li>
 </ol>
+<table>
+<thead>
+<tr>
+<th>保留</th>
+<th>防止被移除或者被重命名</th>
+<th>防止被重命名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类和类成员</td>
+<td>-keep</td>
+<td>-keepnames</td>
+</tr>
+<tr>
+<td>仅类成员</td>
+<td>-keepclassmembers</td>
+<td>-keepclassmembernames</td>
+</tr>
+<tr>
+<td>如果拥有某成员，保留类和类成员</td>
+<td>-keepclasseswithmembers</td>
+<td>-keepclasseswithmembernames</td>
+</tr>
+</tbody>
+</table>
+<p>移除是指在<strong>压缩(Shrinking)</strong>时是否会被删除。</p>
 
       
     </div>
